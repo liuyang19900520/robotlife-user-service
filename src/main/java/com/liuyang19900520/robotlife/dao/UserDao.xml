@@ -4,7 +4,7 @@
 
 <mapper namespace="com.liuyang19900520.robotlife.dao.UserDao">
 
-    <resultMap id="UserMap" type="com.liuyang19900520.robotlife.domain.SysUser">
+    <resultMap id="UserMap" type="com.liuyang19900520.robotlife.domain.user.SysUser">
         <id property="id" column="id"></id>
         <result property="userName" column="user_name"/>
         <result property="password" column="password"/>
@@ -22,15 +22,14 @@
     </resultMap>
 
 
-    <select id="signIn" resultMap="UserMap">
-
+    <select id="signIn" resultMap="UserMap" parameterType="com.liuyang19900520.robotlife.domain.user.SysUser">
         SELECT *
         FROM sys_user
-        WHERE user_name = #{userName}
+        WHERE user_name = #{userName} and password=#{password}
 
     </select>
 
-    <insert id="signUp" parameterType="com.liuyang19900520.robotlife.domain.SysUser">
+    <insert id="signUp" parameterType="com.liuyang19900520.robotlife.domain.user.SysUser">
         INSERT INTO sys_user (mobile_phone, user_name, nickname, password, salt,
         signature, gender, qq, email, avatar, province, city, reg_ip, score, status, create_by, create_at, update_by, update_at)
         VALUES (#{mobilePhone},#{userName},#{nickname},#{password},#{salt},#{signature},#{gender},#{qq},#{email},#{avatar},#{province},

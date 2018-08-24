@@ -1,4 +1,4 @@
-package com.liuyang19900520.robotlife.domain;
+package com.liuyang19900520.robotlife.domain.user;
 
 public class SysUserRole {
     private Long id;

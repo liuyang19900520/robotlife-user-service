@@ -2,13 +2,13 @@ package com.liuyang19900520.robotlife.service.impl;
 
 import com.google.common.collect.Maps;
 import com.liuyang19900520.robotlife.common.pojo.Messages;
-import com.liuyang19900520.robotlife.common.pojo.ResultVo;
 import com.liuyang19900520.robotlife.common.util.LEmailUtil;
 import com.liuyang19900520.robotlife.dao.UserDao;
-import com.liuyang19900520.robotlife.domain.SysUser;
+import com.liuyang19900520.robotlife.domain.user.SysUser;
 import com.liuyang19900520.robotlife.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +34,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     ThreadPoolTaskExecutor taskExecutor;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
 
     @Override
@@ -74,7 +77,7 @@ public class UserServiceImpl implements UserService {
             user.setStatus(SysUser.UN_ACTIVE_STATUS);
             int i = sysUserDao.signUp(user);
             if (i > 0) {
-//                redisTemplate.boundValueOps(code).set(code, 10, TimeUnit.MINUTES);
+                redisTemplate.boundValueOps(code).set(code, 10, TimeUnit.MINUTES);
                 String to = user.getEmail();
                 String subject = "【東京IAIA】 注册验证";
                 String content = "来自【東京IAIA】" + "\n" + "亲爱的" + user.getUserName() + "\n" + "    欢迎您注册我的博客，点击此链接激活，完成注册" + "\n" +
@@ -99,6 +102,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public SysUser signIn(SysUser user) {
-        return null;
+        return sysUserDao.signIn(user);
     }
 }

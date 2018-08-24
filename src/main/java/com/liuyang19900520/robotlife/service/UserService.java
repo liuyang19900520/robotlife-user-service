@@ -1,6 +1,6 @@
 package com.liuyang19900520.robotlife.service;
 
-import com.liuyang19900520.robotlife.domain.SysUser;
+import com.liuyang19900520.robotlife.domain.user.SysUser;
 
 import java.util.Map;
 

@@ -1,5 +1,6 @@
-package com.liuyang19900520.robotlife.domain;
+package com.liuyang19900520.robotlife.domain.user;
 
+import com.liuyang19900520.robotlife.domain.BaseEntity;
 import lombok.Data;
 
 import java.io.Serializable;

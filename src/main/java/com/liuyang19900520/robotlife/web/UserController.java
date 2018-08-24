@@ -2,10 +2,8 @@ package com.liuyang19900520.robotlife.web;
 
 import com.liuyang19900520.robotlife.common.pojo.Messages;
 import com.liuyang19900520.robotlife.common.pojo.ResultVo;
-import com.liuyang19900520.robotlife.common.util.LStringUtils;
-import com.liuyang19900520.robotlife.domain.SysUser;
+import com.liuyang19900520.robotlife.domain.user.SysUser;
 import com.liuyang19900520.robotlife.service.UserService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

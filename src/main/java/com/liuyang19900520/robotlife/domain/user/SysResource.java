@@ -1,15 +1,23 @@
-package com.liuyang19900520.robotlife.domain;
+package com.liuyang19900520.robotlife.domain.user;
 
 import java.util.Date;
 
-public class SysRole {
+public class SysResource {
     private Long id;
+
+    private String type;
 
     private String name;
 
-    private String code;
+    private String permission;
 
-    private String remark;
+    private String icon;
+
+    private Integer sort;
+
+    private String url;
+
+    private String description;
 
     private Boolean status;
 
@@ -31,6 +39,14 @@ public class SysRole {
         this.id = id;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
+    }
+
     public String getName() {
         return name;
     }
@@ -39,20 +55,44 @@ public class SysRole {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getCode() {
-        return code;
+    public String getPermission() {
+        return permission;
     }
 
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
+    public void setPermission(String permission) {
+        this.permission = permission == null ? null : permission.trim();
     }
 
-    public String getRemark() {
-        return remark;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
+    public void setIcon(String icon) {
+        this.icon = icon == null ? null : icon.trim();
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url == null ? null : url.trim();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 
     public Boolean getStatus() {
