@@ -1,0 +1,58 @@
+server:
+  port: 8099
+
+spring:
+  profiles: user8099
+  application:
+    name: robotlife-user
+
+
+feign:
+  hystrix:
+    enabled: true
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://liuyang19900520:123456@peer1:8761/eureka/,http://liuyang19900520:123456@peer2:8762/eureka/,http://liuyang19900520:123456@peer3:8763/eureka/
+    healthcheck:
+      enabled: true
+  instance:
+        prefer-ip-address: true
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}
+
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 5000
+management.endpoints.web.exposure.include: hystrix.stream
+
+---
+server:
+  port: 8098
+
+spring:
+  profiles: user8098
+  application:
+    name: robotlife-user
+
+feign:
+  hystrix:
+    enabled: true
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://liuyang19900520:123456@peer1:8761/eureka/,http://liuyang19900520:123456@peer2:8762/eureka/,http://liuyang19900520:123456@peer3:8763/eureka/
+    healthcheck:
+      enabled: true
+  instance:
+        prefer-ip-address: true
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}
+
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 5000
+management.endpoints.web.exposure.include: hystrix.stream
+
+
+
+
+
