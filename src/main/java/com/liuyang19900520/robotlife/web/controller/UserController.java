@@ -1,4 +1,4 @@
-package com.liuyang19900520.robotlife.web;
+package com.liuyang19900520.robotlife.web.controller;
 
 import com.liuyang19900520.robotlife.common.pojo.Messages;
 import com.liuyang19900520.robotlife.common.pojo.ResultVo;
@@ -41,6 +41,15 @@ public class UserController {
         Map<String, Object> result = userService.signUp("mobile", user);
 
         return ResultVo.info((Boolean) result.get("result"), (Messages) result.get("msg"), null);
+    }
+
+
+    @PostMapping("/signin")
+    public Object signIn(@RequestBody SysUser user) {
+
+        SysUser sysUser = userService.signIn(user);
+
+        return ResultVo.success(Messages.USER_SIGN_IN_SUCCESS, sysUser);
     }
 
 

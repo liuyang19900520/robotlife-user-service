@@ -5,11 +5,15 @@ spring:
   profiles: user8099
   application:
     name: robotlife-user
-
+  redis:
+    host: 18.179.241.192
+    port: 6379
+    database: 0
 
 feign:
   hystrix:
     enabled: true
+
 
 
 eureka:

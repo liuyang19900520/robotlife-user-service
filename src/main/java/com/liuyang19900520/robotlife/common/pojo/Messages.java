@@ -13,7 +13,8 @@ public enum Messages {
     MESSAGE_ERROR(10002, "验证短信发送失败"),
     USER_EXISTED(10001, "注册用户存在"),
     USER_SIGN_UP_SUCCESS_MOBILE(10003, "注册用户成功"),
-    USER_SIGN_UP_SUCCESS_EMAIL(10003, "注册用户成功，请激活");
+    USER_SIGN_IN_SUCCESS(10009, "注册登录成功"),
+    USER_SIGN_UP_SUCCESS_EMAIL(10004, "注册用户成功，请激活");
 
     private final int value;
 

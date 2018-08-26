@@ -11,30 +11,32 @@ import org.springframework.data.redis.core.RedisTemplate;
  */
 @Configuration
 public class RedisConfig {
+    @Value("${spring.redis.host}")
+    private String host;
 
-
-    private String host = "18.179.241.192";
-
-
+    @Value("${spring.redis.port}")
     private Integer port = 6379;
 
-
+    @Value("${spring.redis.database}")
     private Integer database = 0;
 
     @Bean
     JedisConnectionFactory jedisConnectionFactory() {
-        JedisConnectionFactory connectionFactory = new JedisConnectionFactory();
-        connectionFactory.setHostName(host);
-        connectionFactory.setPort(port);
-        connectionFactory.setDatabase(database);
-        return connectionFactory;
+        JedisConnectionFactory factory = new JedisConnectionFactory();
+        factory.setHostName(host);
+        factory.setPort(port);
+
+
+        return factory;
     }
+    @Bean
+    public JedisPool redisPoolFactory() {
+        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+        jedisPoolConfig.setMaxIdle(maxIdle);
+        jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
 
-    @Bean("redisTemplate")
-    public RedisTemplate<String, Object> redisTemplate() {
-        RedisTemplate redisTemplate = new RedisTemplate();
-        redisTemplate.setConnectionFactory(jedisConnectionFactory());
-
-        return redisTemplate;
+        JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout, password);
+        return jedisPool;
     }
 }
+
