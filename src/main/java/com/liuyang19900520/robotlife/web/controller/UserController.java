@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+import static com.liuyang19900520.robotlife.common.pojo.Messages.USER_SIGN_IN_FAILED;
+import static com.liuyang19900520.robotlife.common.pojo.Messages.USER_SIGN_IN_SUCCESS;
+
 /**
  * @program: robotlife-user-service
  * @description:
@@ -49,7 +52,12 @@ public class UserController {
 
         SysUser sysUser = userService.signIn(user);
 
-        return ResultVo.success(Messages.USER_SIGN_IN_SUCCESS, sysUser);
+        if (sysUser != null) {
+            return sysUser;
+        } else {
+            return USER_SIGN_IN_FAILED;
+        }
+
     }
 
 

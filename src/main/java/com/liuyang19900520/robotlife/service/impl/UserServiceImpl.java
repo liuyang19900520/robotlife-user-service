@@ -2,7 +2,9 @@ package com.liuyang19900520.robotlife.service.impl;
 
 import com.google.common.collect.Maps;
 import com.liuyang19900520.robotlife.common.pojo.Messages;
+import com.liuyang19900520.robotlife.common.util.Encrypt;
 import com.liuyang19900520.robotlife.common.util.LEmailUtil;
+import com.liuyang19900520.robotlife.common.util.LMD5Utils;
 import com.liuyang19900520.robotlife.dao.UserDao;
 import com.liuyang19900520.robotlife.domain.user.SysUser;
 import com.liuyang19900520.robotlife.service.UserService;
@@ -36,13 +38,16 @@ public class UserServiceImpl implements UserService {
     ThreadPoolTaskExecutor taskExecutor;
 
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisTemplate redisTemplate;
 
 
     @Override
     public Map<String, Object> signUp(String type, SysUser user) {
 
         Map<String, Object> result = Maps.newConcurrentMap();
+
+        String newPwd = Encrypt.md5(user.getPassword(), user.getUserName());
+        user.setPassword(newPwd);
 
         SysUser sysUser = sysUserDao.checkUser(user);
 
