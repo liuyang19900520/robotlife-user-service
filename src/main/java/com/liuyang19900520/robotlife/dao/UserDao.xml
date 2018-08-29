@@ -22,10 +22,10 @@
     </resultMap>
 
 
-    <select id="signIn" resultMap="UserMap" parameterType="com.liuyang19900520.robotlife.domain.user.SysUser">
+    <select id="findAccount" resultMap="UserMap">
         SELECT *
         FROM sys_user
-        WHERE user_name = #{userName} and password=#{password}
+        WHERE user_name = #{userName}
 
     </select>
 
@@ -57,6 +57,24 @@
         UPDATE sys_user SET status=0
         WHERE signature=#{code}
     </update>
+
+    <select id="listRolesByAccount" resultType="java.lang.String">
+        SELECT r.code
+        FROM sys_role r
+        INNER JOIN sys_user_role ur ON r.id = ur.role_id
+        INNER JOIN sys_user u ON u.id = ur.user_id
+        WHERE u.user_name = #{userName}
+    </select>
+
+    <select id="listPermissionsByAccount" resultType="java.lang.String">
+        SELECT r.permission
+        FROM sys_resource r
+        INNER JOIN sys_role_resource rr ON r.id = rr.resource_id
+        INNER JOIN sys_role role ON rr.role_id = role.id
+        INNER JOIN sys_user_role ur ON ur.role_id = role.id
+        INNER JOIN sys_user u ON u.id = ur.user_id
+        WHERE u.user_name = #{userName}
+    </select>
 
 
 </mapper>

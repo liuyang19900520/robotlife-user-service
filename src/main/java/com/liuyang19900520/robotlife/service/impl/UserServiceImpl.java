@@ -4,7 +4,6 @@ import com.google.common.collect.Maps;
 import com.liuyang19900520.robotlife.common.pojo.Messages;
 import com.liuyang19900520.robotlife.common.util.Encrypt;
 import com.liuyang19900520.robotlife.common.util.LEmailUtil;
-import com.liuyang19900520.robotlife.common.util.LMD5Utils;
 import com.liuyang19900520.robotlife.dao.UserDao;
 import com.liuyang19900520.robotlife.domain.user.SysUser;
 import com.liuyang19900520.robotlife.service.UserService;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -106,7 +106,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public SysUser signIn(SysUser user) {
-        return sysUserDao.signIn(user);
+    public SysUser signIn(String userName) {
+        return sysUserDao.findAccount(userName);
+    }
+
+
+    @Override
+    public Set<String> listRolesByAccount(String userName) {
+        return sysUserDao.listRolesByAccount(userName);
+    }
+
+    @Override
+    public Set<String> listPermissionsByAccount(String userName) {
+        return sysUserDao.listPermissionsByAccount(userName);
     }
 }

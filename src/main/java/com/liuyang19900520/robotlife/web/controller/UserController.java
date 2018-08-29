@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
-
-import static com.liuyang19900520.robotlife.common.pojo.Messages.USER_SIGN_IN_FAILED;
-import static com.liuyang19900520.robotlife.common.pojo.Messages.USER_SIGN_IN_SUCCESS;
+import java.util.Set;
 
 /**
  * @program: robotlife-user-service
@@ -48,16 +46,27 @@ public class UserController {
 
 
     @PostMapping("/signin")
-    public Object signIn(@RequestBody SysUser user) {
+    public SysUser findAccount(@RequestBody String userNmae) {
 
-        SysUser sysUser = userService.signIn(user);
+        SysUser sysUser = userService.signIn(userNmae);
 
-        if (sysUser != null) {
-            return sysUser;
-        } else {
-            return USER_SIGN_IN_FAILED;
-        }
+        return sysUser;
+    }
 
+    @PostMapping("/roles")
+    public Set<String> listRolesByAccount(@RequestBody String userName) {
+
+        Set<String> roles = userService.listRolesByAccount(userName);
+
+        return roles;
+    }
+
+    @PostMapping("/permissions")
+    public Set<String> listPermissionsByAccount(@RequestBody String userName) {
+
+        Set<String> permissions = userService.listPermissionsByAccount(userName);
+
+        return permissions;
     }
 
 
