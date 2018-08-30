@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.liuyang19900520.robotlife.user.dao.UserCenterDao">
+
+    <resultMap id="UserMap" type="com.liuyang19900520.robotlife.user.domain.user.SysUser">
+        <id property="id" column="id"></id>
+        <result property="userName" column="user_name"/>
+        <result property="password" column="password"/>
+        <result property="mobilePhone" column="mobile_phone"/>
+        <result property="avatar" column="avatar"/>
+        <result property="nickname" column="nickname"/>
+        <result property="email" column="email"/>
+
+
+        <result property="createAt" column="create_at"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateAt" column="update_at"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="deleteFlag" column="delete_flag"/>
+    </resultMap>
+
+
+    <update id="changeUser" parameterType="com.liuyang19900520.robotlife.user.domain.user.SysUser">
+        update sys_user set nickname=#{nickname} where user_id=#{userId}
+    </update>
+
+
+</mapper>
