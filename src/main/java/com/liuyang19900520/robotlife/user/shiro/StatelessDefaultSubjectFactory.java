@@ -1,11 +1,11 @@
 package com.liuyang19900520.robotlife.user.shiro;
 
 
-
 import com.liuyang19900520.robotlife.user.shiro.token.HmacToken;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.subject.SubjectContext;
+import org.apache.shiro.web.mgt.DefaultWebSubjectFactory;
 
 
 /**

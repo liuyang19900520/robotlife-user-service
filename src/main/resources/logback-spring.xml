@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <!-- 定义日志文件 输入位置 -->
+    <!--<property name="log_dir" value="C:\\Users\\liuyang19900520\\Desktop\\logs"/>-->
+    <property name="log_dir" value="/home/ec2-user/robotlife/logs/user-service"/>
+    <!-- 日志最大的历史 30天 -->
+    <property name="maxHistory" value="30"/>
+    <!-- 日志文件大小 5MB -->
+    <property name="maxFileSize" value="5MB"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_dir}/api-info.log</file>
+        <!-- 过滤器，只记录INFO级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <maxHistory>${maxHistory}</maxHistory>
+            <maxFileSize>${maxFileSize}</maxFileSize>
+            <fileNamePattern>${log_dir}/api-info.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="rollingWarnFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_dir}/api-warn.log</file>
+        <!-- 过滤器，只记录WARN级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <maxHistory>${maxHistory}</maxHistory>
+            <maxFileSize>${maxFileSize}</maxFileSize>
+            <fileNamePattern>${log_dir}/api-warn.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="rollingErrorFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_dir}/api-error.log</file>
+        <!-- 过滤器，只记录WARN级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <maxHistory>${maxHistory}</maxHistory>
+            <maxFileSize>${maxFileSize}</maxFileSize>
+            <fileNamePattern>${log_dir}/api-error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--不同业务逻辑的日志打印到不同文件-->
+    <appender name="rollingBusinessFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_dir}/api-business.log</file>
+        <append>true</append>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <maxHistory>${maxHistory}</maxHistory>
+            <maxFileSize>${maxFileSize}</maxFileSize>
+            <fileNamePattern>${log_dir}/api-business.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- project default level -->
+    <logger name="org.jdonee.cooking" level="DEBUG"/>
+    <logger name="org.apache.shiro.*.mgt" level="DEBUG"/>
+    <logger name="org.apache.shiro.spring" level="DEBUG"/>
+
+    <logger name="business" additivity="false" level="INFO">
+        <appender-ref ref="rollingBusinessFile"/>
+    </logger>
+    <root level="INFO">
+        <appender-ref ref="console"/>
+        <appender-ref ref="rollingFile"/>
+        <appender-ref ref="rollingWarnFile"/>
+        <appender-ref ref="rollingErrorFile"/>
+
+    </root>
+
+</configuration>

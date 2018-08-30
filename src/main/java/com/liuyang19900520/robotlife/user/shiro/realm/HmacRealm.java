@@ -1,16 +1,14 @@
 package com.liuyang19900520.robotlife.user.shiro.realm;
 
 
-import com.liuyang19900520.robotlife.auth.commons.util.CryptoUtil;
-import com.liuyang19900520.robotlife.auth.domain.SysUser;
-import com.liuyang19900520.robotlife.auth.service.AuthenticateService;
-import com.liuyang19900520.robotlife.auth.shiro.token.HmacToken;
+import com.liuyang19900520.robotlife.user.common.util.CryptoUtil;
+import com.liuyang19900520.robotlife.user.domain.user.SysUser;
+import com.liuyang19900520.robotlife.user.shiro.token.HmacToken;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
 
@@ -23,8 +21,8 @@ public class HmacRealm extends AuthorizingRealm {
 
     private static final int EXPIRE_TIME = 600000000;
 
-    @Autowired
-    AuthenticateService authenticateService;
+//    @Autowired
+//    AuthenticateService authenticateService;
 
 
     /**
@@ -55,9 +53,9 @@ public class HmacRealm extends AuthorizingRealm {
         // 此处可以添加查询数据库检查账号是否存在、是否被锁定、是否被禁用等等逻辑
         // 从token中获取用户名
         String userName = hmacToken.getClientKey();
+        SysUser user = new SysUser();
 
-
-        SysUser user = authenticateService.findUserByAccount(userName);
+//        SysUser user = authenticateService.findUserByAccount(userName);
 
 
         // 用户不存在
@@ -89,8 +87,10 @@ public class HmacRealm extends AuthorizingRealm {
                 && payload.charAt(payload.length() - 1) == '}') {
             String appId = payload.substring(6, payload.length() - 1);
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-            Set<String> roles = authenticateService.listRolesByAccount(appId);
-            Set<String> permissions = this.authenticateService.listPermissionsByAccount(appId);
+//            Set<String> roles = authenticateService.listRolesByAccount(appId);
+//            Set<String> permissions = this.authenticateService.listPermissionsByAccount(appId);
+            Set<String> roles = null;
+            Set<String> permissions = null;
             if (null != roles && !roles.isEmpty()) {
                 info.setRoles(roles);
             }
