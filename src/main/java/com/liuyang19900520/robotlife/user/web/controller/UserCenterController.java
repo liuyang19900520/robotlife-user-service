@@ -25,7 +25,6 @@ public class UserCenterController {
 
     @PostMapping("/nickname")
     public Object registerEmail(@RequestBody SysUser user) {
-
         return userService.changeUser(user);
     }
 

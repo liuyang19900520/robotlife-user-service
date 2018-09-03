@@ -1,7 +1,10 @@
 package com.liuyang19900520.robotlife.user.shiro.filter;
 
 
-import com.liuyang19900520.robotlife.user.exception.SysException;
+import com.liuyang19900520.robotlife.user.common.pojo.Messages;
+import com.liuyang19900520.robotlife.user.common.pojo.ResultVo;
+import com.liuyang19900520.robotlife.user.common.util.LJsonUtils;
+import io.jsonwebtoken.MalformedJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -41,13 +44,23 @@ public class JwtAuthFilter extends StatelessFilter {
                     return true;
                 }
             } catch (AuthenticationException e) {
-//                e.printStackTrace();
-//                log.info("认证失败");
-//                resp.setContentType("application/json;charset=UTF-8");
-//                resp.setHeader("Access-Control-Allow-Origin", "*");
-//                resp.getOutputStream().write(LJsonUtils.objectToJson(ResultVo.error(Messages.SIGN_IN_FAILED, e.getMessage())).getBytes());
-                throw new SysException("10001", e.getMessage());
+                log.info(e.getMessage());
+                resp.setContentType("application/json;charset=UTF-8");
+                resp.setHeader("Access-Control-Allow-Origin", "*");
+                resp.getOutputStream().write(LJsonUtils.objectToJson(ResultVo.error(Messages.JWT_TOKEN_AUTH_FAILED, e.getMessage())).getBytes());
+
+            } catch (MalformedJwtException e) {
+                log.info(e.getMessage());
+                resp.setContentType("application/json;charset=UTF-8");
+                resp.setHeader("Access-Control-Allow-Origin", "*");
+                resp.getOutputStream().write(LJsonUtils.objectToJson(ResultVo.error(Messages.JWT_TOKEN_AUTH_FAILED, e.getMessage())).getBytes());
+
             }
+        } else {
+            log.info("jwt token认证失败");
+            resp.setContentType("application/json;charset=UTF-8");
+            resp.setHeader("Access-Control-Allow-Origin", "*");
+            resp.getOutputStream().write(LJsonUtils.objectToJson(ResultVo.error(Messages.JWT_TOKEN_AUTH_FAILED, "")).getBytes());
         }
         return false;
     }

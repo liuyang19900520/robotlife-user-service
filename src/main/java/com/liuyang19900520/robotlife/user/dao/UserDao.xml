@@ -6,6 +6,7 @@
 
     <resultMap id="UserMap" type="com.liuyang19900520.robotlife.user.domain.user.SysUser">
         <id property="id" column="id"></id>
+        <result property="userId" column="user_id"/>
         <result property="userName" column="user_name"/>
         <result property="password" column="password"/>
         <result property="mobilePhone" column="mobile_phone"/>

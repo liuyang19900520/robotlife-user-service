@@ -57,7 +57,6 @@ public class JwtRealm extends AuthorizingRealm {
                 if (expiration.getTime() < System.currentTimeMillis()) {
                     throw new AuthenticationException("jwt过期");
                 }
-
                 if (redisTemplate.boundValueOps(claims.getSubject()).get() != null) {
                     throw new AuthenticationException("jwt过期");
                 }
@@ -111,8 +110,6 @@ public class JwtRealm extends AuthorizingRealm {
 //            info.setStringPermissions(permissions);
 //            return info;
     }
-//        return null;
-//    }
 
 
 }

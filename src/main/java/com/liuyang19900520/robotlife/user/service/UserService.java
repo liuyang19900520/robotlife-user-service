@@ -16,5 +16,7 @@ public interface UserService {
 
     Set<String> listPermissionsByAccount(String userName);
 
+    Boolean active(String code);
+
 
 }

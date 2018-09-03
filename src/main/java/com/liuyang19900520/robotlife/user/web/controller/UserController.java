@@ -6,11 +6,9 @@ import com.liuyang19900520.robotlife.user.common.pojo.ResultVo;
 import com.liuyang19900520.robotlife.user.domain.user.SysUser;
 import com.liuyang19900520.robotlife.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,6 +32,18 @@ public class UserController {
         Map<String, Object> result = userService.signUp("email", user);
 
         return ResultVo.info((Boolean) result.get("result"), (Messages) result.get("msg"), null);
+    }
+
+    @GetMapping("/signup/email/active")
+    public Object registerEmailActive(HttpServletRequest request) {
+
+        String code = request.getParameter("signature");
+
+        Boolean isActive = userService.active(code);
+
+        return isActive ? ResultVo.success(Messages.SIGN_UP_ACTIVE_SUCCESS, null) :
+                ResultVo.success(Messages.SIGN_UP_ACTIVE_FAILED, null);
+
     }
 
 

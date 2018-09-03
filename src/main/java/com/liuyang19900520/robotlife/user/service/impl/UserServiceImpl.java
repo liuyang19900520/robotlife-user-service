@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
         //注册的用户已存在
         if (sysUser != null) {
             result.put("result", false);
-            result.put("msg", Messages.USER_EXISTED);
+            result.put("msg", Messages.SIGN_UP_FAILED_USER_EXISTED);
             return result;
         }
         user.setCreateAt(new Date());
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
             int i = sysUserDao.signUp(user);
             if (i > 0) {
                 result.put("result", true);
-                result.put("msg", Messages.USER_SIGN_UP_SUCCESS_MOBILE);
+                result.put("msg", Messages.SIGN_UP_SUCCESS_MOBILE);
                 return result;
             }
         }
@@ -84,9 +84,9 @@ public class UserServiceImpl implements UserService {
             if (i > 0) {
                 redisTemplate.boundValueOps(code).set(code, 10, TimeUnit.MINUTES);
                 String to = user.getEmail();
-                String subject = "【東京IAIA】 注册验证";
-                String content = "来自【東京IAIA】" + "\n" + "亲爱的" + user.getUserName() + "\n" + "    欢迎您注册我的博客，点击此链接激活，完成注册" + "\n" +
-                        " http://localhost:8085/register/email/active?code=" + code + "\n" + "如果不能调转，可将连接复制到浏览器中进行访问";
+                String subject = "【 Robot Life Blog 】 注册验证";
+                String content = "来自【 Robot Life Blog 】" + "\n" + "亲爱的" + user.getUserName() + "\n" + "    欢迎您注册我的博客，点击此链接激活，完成注册" + "\n" +
+                        " http://liuyang19900520.com/users/users/signup/email/active?signature=" + code + "\n" + "如果不能调转，可将连接复制到浏览器中进行访问";
 
                 Runnable emailRunnable = new Runnable() {
                     @Override
@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
                 taskExecutor.execute(emailRunnable);
 
                 result.put("result", true);
-                result.put("msg", Messages.USER_SIGN_UP_SUCCESS_EMAIL);
+                result.put("msg", Messages.SIGN_UP_SUCCESS_EMAIL);
                 return result;
             }
 
@@ -119,5 +119,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public Set<String> listPermissionsByAccount(String userName) {
         return sysUserDao.listPermissionsByAccount(userName);
+    }
+
+    @Override
+    public Boolean active(String code) {
+        int result = 0;
+
+        if (redisTemplate.boundValueOps(code).get() != null) {
+            result = sysUserDao.activeUser(code);
+        }
+        return result > 0;
     }
 }

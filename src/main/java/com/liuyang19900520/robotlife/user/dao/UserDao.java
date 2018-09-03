@@ -14,7 +14,7 @@ public interface UserDao {
 
     SysUser checkUser(SysUser user);
 
-    SysUser activeUser();
+    Integer activeUser(@Param("code") String code);
 
     SysUser findAccount(@Param("userName") String userName);
 
