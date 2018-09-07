@@ -27,15 +27,7 @@ import java.util.List;
 @Configuration
 public class WebAppConfig implements WebMvcConfigurer {
 
-    /**
-     * 跨域
-     *
-     * @param registry
-     */
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
-    }
+
 
     /**
      * null 转 ""
